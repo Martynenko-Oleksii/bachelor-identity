@@ -9,7 +9,7 @@ namespace IdentityServer
 {
     public static class SeedData
     {
-        private static string[] _roles = new string[]
+        public static string[] Roles = new string[]
         {
             "security",
             "access-control",
@@ -29,7 +29,7 @@ namespace IdentityServer
             "administration",
              "generic-reports",
              "department-reports"
-    };
+        };
 
         public static async void EnsureSeedData(this IApplicationBuilder app)
         {
@@ -41,7 +41,7 @@ namespace IdentityServer
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
             if (!context.Roles.Any())
             {
-                foreach (var role in _roles)
+                foreach (var role in Roles)
                 {
                     await roleManager.CreateAsync(new IdentityRole<Guid>(role));
                 }
@@ -63,7 +63,7 @@ namespace IdentityServer
                     throw new Exception(result.Errors.First().Description);
                 }
 
-                result = await userMgr.AddToRolesAsync(aranod, _roles);
+                result = await userMgr.AddToRolesAsync(aranod, Roles);
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);

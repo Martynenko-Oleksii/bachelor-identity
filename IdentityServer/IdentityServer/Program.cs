@@ -1,6 +1,7 @@
 using IdentityServer;
 using IdentityServer.Data;
 using IdentityServer.Models;
+using IdentityServer.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(o =>
 
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<AppDbContext>()
+    .AddClaimsPrincipalFactory<ClaimsFactory>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddIdentityServer(options =>

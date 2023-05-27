@@ -7,11 +7,13 @@ namespace IdentityServer
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             IdentityResource customProfile = new(name: "profile", userClaims: new[] { "name" });
+            IdentityResource roles = new(name: "roles", userClaims: new[] { "role" });
 
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                customProfile
+                customProfile,
+                roles
             };
         }
 
@@ -31,7 +33,7 @@ namespace IdentityServer
             {
                 new ApiResource("medibase")
                 {
-                    UserClaims = { "name" },
+                    UserClaims = { "name", "role" },
                     Scopes = { "security", "data", "reporting" }
                 }
             };
@@ -58,7 +60,7 @@ namespace IdentityServer
                     },
                     AllowedCorsOrigins = { config["Cors"] },
 
-                    AllowedScopes = { "openid", "profile", "security", "data", "reporting", "offline_access"},
+                    AllowedScopes = { "openid", "profile", "roles", "security", "data", "reporting", "offline_access"},
 
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
