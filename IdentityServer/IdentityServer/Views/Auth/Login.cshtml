@@ -1,25 +1,43 @@
 ﻿﻿@using IdentityServer.Models
 @model LoginViewModel
 
-<div class="row justify-content-md-center">
-    <div class="col-md-4">
-        <h1 class="mt-5 mb-3">Sign In</h1>
+<div class="row justify-content-md-center" style="margin-top: 144px;">
+    <div style="width: 384px;padding: 0 0;border-radius: 5px;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 2px 4px 0 rgba(0, 0, 0, 0.04);">
+        <div style="background-color: #1E71AF;
+                    color: #ffffff;
+                    width: 100%;
+                    height: 86px;
+                    border-top-left-radius: 5px;
+                    ;border-top-right-radius: 5px;
+                    text-align: center;">
+            <span style="font-family: Roboto;font-size: 60px;font-weight: 300">Log In</span>
+        </div>
         <form asp-controller="Auth" asp-action="Login" method="post">
-
-            <partial name="_ValidationSummary" />
-
             <input type="hidden" asp-for="ReturnUrl" />
-            <div class="form-group">
-                <label class="form-group">Username</label>
-                <input class="form-control" asp-for="UserName" placeholder="Username" />
+            <div class="form-group" style="margin-top: 32px;justify-content:center;display:flex;">
+                <div style="display: flex;flex-direction:column;">
+                    <div>
+                        @Html.ValidationSummary(true, "", new { @style = "color: #b00020; font-size: 12px;margin-top:4px;" })
+                    </div>
+                    <input style="height: 44px;width: 288px;border: none;border-bottom: 1px solid #29A2E6;background-color: #EFEFEF;border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;"
+                           class="form-control"
+                           asp-for="UserName"
+                           placeholder="User Name" />
+                    <span asp-validation-for="UserName" style="color: #b00020; font-size: 12px;margin-top:4px;"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" placeholder="Password" asp-for="Password" />
+            <div class="form-group" style="margin-top: 16px;justify-content:center;display:flex;">
+                <div style="display: flex;flex-direction:column;">
+                    <input style="height: 44px;width: 288px;border: none;border-bottom: 1px solid #29A2E6;background-color: #EFEFEF;border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;"
+                           type="password" class="form-control"
+                           placeholder="Password" asp-for="Password" />
+                    <span asp-validation-for="Password" style="color: #b00020; font-size: 12px;margin-top:4px;"></span>
+                </div>
             </div>
-            <div class="mt-4 mb-4">
-                <button class="btn btn-primary" name="button" type="submit">Sign In</button>
-                <button class="btn btn-light" name="button" type="button" onclick="window.location.href='@Url.Action("Cancel", "Auth")'">Cancel</button>
+            <div style="margin-top: 16px;justify-content:center;display:flex;margin-bottom: 32px;">
+                <button class="btn" style="background-color: #29A2E6;font-weight: bold; font-size: 14px;width: 288px;" name="button" type="submit">Continue</button>
             </div>
         </form>
     </div>

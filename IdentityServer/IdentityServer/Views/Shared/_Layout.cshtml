@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AuthServer</title>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
@@ -16,6 +16,15 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        input::placeholder {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.37);
+        }
+        * {
+            font-family: Roboto !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -23,12 +32,6 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - IdentityServer - Aranod
-        </div>
-    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

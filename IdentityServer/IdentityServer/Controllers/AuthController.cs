@@ -55,6 +55,11 @@ namespace IdentityServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(loginViewModel);
+            }
+
             Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, false, false);
 
             if (result.Succeeded)
@@ -67,7 +72,9 @@ namespace IdentityServer.Controllers
                 return Redirect(loginViewModel.ReturnUrl);
             }
 
-            return View();
+            ModelState.AddModelError(string.Empty, "Invalid User Name or Password");
+
+            return View(loginViewModel);
         }
 
         public IActionResult Cancel()

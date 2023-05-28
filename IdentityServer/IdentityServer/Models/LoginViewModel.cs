@@ -4,10 +4,10 @@ namespace IdentityServer.Models
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "* User Name is required")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "* Password is required")]
         public string Password { get; set; }
 
         public string ReturnUrl { get; set; }
