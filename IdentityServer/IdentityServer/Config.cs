@@ -6,14 +6,18 @@ namespace IdentityServer
     {
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
-            IdentityResource customProfile = new(name: "profile", userClaims: new[] { "name" });
+            IdentityResource customProfile = new(name: "profile", userClaims: new[] { "name", "firstName", "lastName", "email" });
             IdentityResource roles = new(name: "roles", userClaims: new[] { "role" });
+            IdentityResource customer = new(name: "customer", userClaims: new[] { "customerId", "customerName" });
+            IdentityResource additionInfo = new(name: "additional", userClaims: new[] { "lastSignIn", "confirmed" });
 
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
                 customProfile,
-                roles
+                roles,
+                customer,
+                additionInfo
             };
         }
 
@@ -33,7 +37,7 @@ namespace IdentityServer
             {
                 new ApiResource("medibase")
                 {
-                    UserClaims = { "name", "role" },
+                    UserClaims = { "name", "firstName", "lastName", "email", "role", "customerId", "customerName", "lastSignIn", "confirmed" },
                     Scopes = { "security", "data", "reporting" }
                 }
             };
@@ -60,11 +64,11 @@ namespace IdentityServer
                     },
                     AllowedCorsOrigins = { config["Cors"] },
 
-                    AllowedScopes = { "openid", "profile", "roles", "security", "data", "reporting", "offline_access"},
+                    AllowedScopes = { "openid", "profile", "roles", "customer", "additional", "security", "data", "reporting", "offline_access"},
 
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
-                    AccessTokenLifetime = 300
+                    AccessTokenLifetime = 3600
                 },
             };
         }

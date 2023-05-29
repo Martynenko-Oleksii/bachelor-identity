@@ -2,6 +2,7 @@ using IdentityServer;
 using IdentityServer.Data;
 using IdentityServer.Models;
 using IdentityServer.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,14 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddClaimsPrincipalFactory<ClaimsFactory>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
+    {
+        c.Authority = builder.Configuration["JWT:Authority"];
+        c.Audience = builder.Configuration["JWT:Audience"];
+        c.RequireHttpsMetadata = false;
+    });
+
 builder.Services.AddIdentityServer(options =>
     {
         options.UserInteraction.LoginUrl = "/auth/login";
@@ -33,8 +42,6 @@ builder.Services.AddIdentityServer(options =>
     .AddInMemoryApiResources(Config.GetApiResources())
     .AddInMemoryClients(Config.GetClients(builder.Configuration))
     .AddAspNetIdentity<User>();
-
-builder.Services.AddCors();
 
 builder.Services.Configure<CookiePolicyOptions>(o =>
 {
@@ -50,6 +57,8 @@ builder.Services.Configure<CookiePolicyOptions>(o =>
         cookieContext.CookieOptions.Secure = true;
     };
 });
+
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -72,7 +81,9 @@ app.UseRouting();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins(builder.Configuration["Cors"]));
 
 app.UseIdentityServer();
+
 app.UseCookiePolicy();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

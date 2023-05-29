@@ -1,9 +1,7 @@
-﻿using IdentityModel;
-using IdentityServer.Data;
+﻿using IdentityServer.Data;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace IdentityServer
 {
@@ -22,6 +20,7 @@ namespace IdentityServer
             "cc-mapping",
             "gl-pr-mapping",
             "data-entry",
+            "data-administration",
 
             "reporting",
             "management",
@@ -53,28 +52,17 @@ namespace IdentityServer
                 var aranod = new User
                 {
                     UserName = "aranod",
-                    Email = "aranod42@email.com",
-                    EmailConfirmed = true,
+                    CustomerId = 6,
+                    CustomerName = "Internal Customer"
                 };
 
-                var result = await userMgr.CreateAsync(aranod, "Password0_");
+                var result = await userMgr.CreateAsync(aranod, "_Password0_");
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
 
                 result = await userMgr.AddToRolesAsync(aranod, Roles);
-                if (!result.Succeeded)
-                {
-                    throw new Exception(result.Errors.First().Description);
-                }
-
-                result = await userMgr.AddClaimsAsync(aranod, new Claim[]
-                    {
-                        new Claim(JwtClaimTypes.Name, "Aranod"),
-                        new Claim(JwtClaimTypes.GivenName, "Oleksii"),
-                        new Claim(JwtClaimTypes.FamilyName, "Martynenko"),
-                    });
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);

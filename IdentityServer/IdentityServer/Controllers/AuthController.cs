@@ -64,10 +64,9 @@ namespace IdentityServer.Controllers
 
             if (result.Succeeded)
             {
-                //this.logger.LogInformation(
-                //    "User {username} logged in. Return URL: {returnUrl}",
-                //    loginViewModel.UserName,
-                //    loginViewModel.ReturnUrl);
+                var user = await userManager.FindByNameAsync(loginViewModel.UserName);
+                user.LastSignInTime = DateTime.UtcNow;
+                await userManager.UpdateAsync(user);
 
                 return Redirect(loginViewModel.ReturnUrl);
             }
