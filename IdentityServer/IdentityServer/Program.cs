@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseKestrel()
-    .UseUrls(builder.Configuration["KestrelUrls:https"], builder.Configuration["KestrelUrls:http"]);
+    .UseUrls(builder.Configuration["KestrelUrls:http"]);
 
 builder.Services.AddControllersWithViews();
 
