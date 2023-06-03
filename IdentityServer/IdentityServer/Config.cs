@@ -68,7 +68,7 @@ namespace IdentityServer
 
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
-                    AccessTokenLifetime = 3600
+                    //AccessTokenLifetime = 3600
                 },
             };
         }
